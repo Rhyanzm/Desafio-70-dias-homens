@@ -1,0 +1,506 @@
+/* =========================================================
+   1. Tokens e configuração global
+   ========================================================= */
+:root {
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  color-scheme: dark;
+
+  --bg: #0a0a0b;
+  --card: #121214;
+  --card2: #1a1a1e;
+  --ink: #f4f4f5;
+  --mut: #8a8a93;
+  --line: #26262b;
+  --acc: #c6ff3d;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Inter, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* =========================================================
+   2. Estrutura e cabeçalho
+   ========================================================= */
+.wrap {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 44px 16px 80px;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--acc);
+  border: 1px solid var(--line);
+  padding: 6px 12px;
+  border-radius: 99px;
+}
+
+h1 {
+  font-size: clamp(34px, 7vw, 56px);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1.05;
+  margin: 18px 0 8px;
+}
+
+.sub {
+  color: var(--mut);
+  margin: 0 0 20px;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.pill {
+  border: 1px solid var(--line);
+  background: var(--card);
+  padding: 7px 14px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pill::before,
+.chip::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c);
+}
+
+/* =========================================================
+   3. Navegação por abas
+   ========================================================= */
+.tabs {
+  display: inline-flex;
+  background: var(--card);
+  border: 1px solid var(--line);
+  padding: 4px;
+  border-radius: 12px;
+  margin: 0 0 20px;
+}
+
+.tabs button {
+  border: 0;
+  background: none;
+  color: var(--mut);
+  font: inherit;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 9px 20px;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+.tabs button.on {
+  background: var(--ink);
+  color: #0a0a0b;
+}
+
+/* =========================================================
+   4. Cartões e navegação entre dias
+   ========================================================= */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+
+.strip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.days {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex: 1;
+  padding: 2px;
+}
+
+.days::-webkit-scrollbar {
+  display: none;
+}
+
+.day {
+  flex: 0 0 auto;
+  width: 56px;
+  height: 62px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+}
+
+.day small {
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--mut);
+}
+
+.day b {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.day.on {
+  background: var(--ink);
+  color: #0a0a0b;
+  border-color: var(--ink);
+}
+
+.day.on small {
+  color: #555;
+}
+
+.day.today:not(.on) {
+  border-color: var(--acc);
+}
+
+.arrow {
+  width: 38px;
+  height: 38px;
+  flex: none;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: none;
+  color: var(--mut);
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* =========================================================
+   5. Resumo do dia e participantes
+   ========================================================= */
+.dayhead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.dayhead h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -.01em;
+}
+
+.dayhead p {
+  margin: 4px 0 0;
+  color: var(--mut);
+  font-size: 14px;
+}
+
+.pct {
+  text-align: right;
+  font-size: 38px;
+  font-weight: 700;
+  color: var(--acc);
+  letter-spacing: -.03em;
+  line-height: 1;
+}
+
+.pct small {
+  display: block;
+  font-size: 10px;
+  letter-spacing: .12em;
+  color: var(--mut);
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.av {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--card2);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+}
+
+.who {
+  flex: 1;
+  min-width: 120px;
+}
+
+.who b {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.who span {
+  color: var(--mut);
+  font-size: 13px;
+}
+
+/* =========================================================
+   6. Botões de hábitos e tabela de visão geral
+   ========================================================= */
+.chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  border: 1px solid var(--line);
+  background: none;
+  color: var(--mut);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 99px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.chip.on {
+  background: var(--c);
+  color: var(--tc);
+  border-color: var(--c);
+}
+
+.chip.on::before {
+  content: "\2713";
+  width: auto;
+  height: auto;
+  background: none;
+  font-size: 12px;
+  border-radius: 0;
+}
+
+.scroll {
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 3px;
+  width: 100%;
+  font-size: 12px;
+}
+
+th {
+  font-weight: 600;
+  color: var(--mut);
+}
+
+th,
+td {
+  text-align: center;
+  padding: 1px;
+}
+
+th:first-child,
+td:first-child {
+  text-align: left;
+  position: sticky;
+  left: 0;
+  background: var(--card);
+  padding-right: 10px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+td i {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  margin: auto;
+  background: var(--card2);
+}
+
+td i.f {
+  background: var(--acc);
+}
+
+td i.h {
+  background: #4b5563;
+}
+
+td.p {
+  font-weight: 700;
+  color: var(--acc);
+  padding-left: 6px;
+}
+
+/* =========================================================
+   7. Mensagens e painel administrativo
+   ========================================================= */
+.msg {
+  text-align: center;
+  color: var(--mut);
+  padding: 26px;
+}
+
+details summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.adm {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.adm input[type="text"],
+.adm input[type="date"],
+.adm input[type="number"] {
+  font: inherit;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--card2);
+  color: var(--ink);
+  width: 100%;
+}
+
+.adm label {
+  display: grid;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--mut);
+}
+
+.adm h3 {
+  margin: 6px 0 0;
+  font-size: 14px;
+}
+
+.add,
+.hrow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.hrow input[type="color"] {
+  width: 44px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: none;
+  cursor: pointer;
+  flex: none;
+}
+
+.btn {
+  border: 0;
+  background: var(--acc);
+  color: #0a0a0b;
+  font: inherit;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.x {
+  border: 0;
+  background: none;
+  color: var(--mut);
+  cursor: pointer;
+  font-size: 18px;
+  flex: none;
+}
+
+.x.ask {
+  color: var(--acc);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.mem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+/* =========================================================
+   8. Responsividade
+   ========================================================= */
+@media (max-width: 520px) {
+  .wrap {
+    padding: 28px 12px 56px;
+  }
+
+  .card {
+    padding: 14px;
+  }
+
+  .dayhead {
+    align-items: flex-start;
+  }
+
+  .pct {
+    font-size: 32px;
+  }
+
+  .chips {
+    width: 100%;
+  }
+}
